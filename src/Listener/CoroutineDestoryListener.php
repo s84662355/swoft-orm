@@ -12,7 +12,7 @@ use Swoft\Event\EventHandlerInterface;
 use Swoft\Event\EventInterface;
 use cjhswoftOrm\ConnectionManager;
 use Swoft\SwoftEvent;
-
+use Swoft\Log\Helper\CLog;
 /**
  * Class CoroutineDestoryListener
  *
@@ -33,5 +33,7 @@ class CoroutineDestoryListener implements EventHandlerInterface
         /* @var ConnectionManager $conManager */
         $conManager = BeanFactory::getBean(ConnectionManager::class);
         $conManager->release(true);
+
+        /// CLog::info('Close  CoroutineDestoryListener  laravel connection on %s!',  $event->getName());
     }
 }

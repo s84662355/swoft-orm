@@ -15,7 +15,7 @@ use cjhswoftRabbitmq\Pool;
 use Swoft\Server\SwooleEvent;
 use Swoft\SwoftEvent;
 use cjhswoftOrm\ConnectionManager;
-use Swoft\Bean\BeanFactory;
+ 
 /**
  * Class WorkerStopAndErrorListener
  *

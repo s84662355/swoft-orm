@@ -32,13 +32,15 @@ class ConnectionManager
     /**
      * @param Connection $connection
      */
-    public function setConnection(string $pool,Connection $connection): void
+    public function setConnection(  $pool,Connection $connection): void
     {
         $key = sprintf('%d.%d.%d', Co::tid(), Co::id(),  $pool);
         $this->set($key, $connection);
+
+      ///  var_dump(  $this->get($key ));
     }
 
-    public function hasConnection(string $pool) 
+    public function hasConnection( $pool) 
     {
         $key = sprintf('%d.%d.%d', Co::tid(), Co::id(),  $pool);
         return $this->has($key);
@@ -47,7 +49,7 @@ class ConnectionManager
     /**
      * @param string $pool
      */
-    public function getConnection(string $pool)  
+    public function getConnection(  $pool)  
     {
          $key = sprintf('%d.%d.%d', Co::tid(), Co::id(),  $pool);
          return $this->get($key);
@@ -56,7 +58,7 @@ class ConnectionManager
     /**
      * @param  string $pool
      */
-    public function releaseConnection( string $pool): void
+    public function releaseConnection(  $pool): void
     {
         $key = sprintf('%d.%d.%d', Co::tid(), Co::id(), $pool);
         $connection = $this->getConnection($key);
@@ -80,10 +82,12 @@ class ConnectionManager
 
     public function release_id($id) :void
     {
-        $key = sprintf('%d.%d.%d', Co::tid(), Co::id());
-        $connections = $this->get($key);
+        $key = sprintf('%d.%d', Co::tid(), Co::id());
+        $connections = $this->get($key,[]);
 
-        foreach ($connections as   $connection) {
+     
+
+        foreach ($connections as $k =>  $connection) {
             $connection->rollBack();
         }
 
@@ -93,10 +97,12 @@ class ConnectionManager
 
     public function clean()
     {
-        $ids = sprintf('%d.%d.%d', Co::tid() );
+        $key = sprintf('%d', Co::tid() );
 
-        foreach ($$ids as   $id) {
-             $this->release_id( $id);
+        $ids = $this->get($key,[]);
+
+        foreach ( $ids  as $k =>   $id) {
+             $this->release_id( $k );
         }
 
         $this->data=[];

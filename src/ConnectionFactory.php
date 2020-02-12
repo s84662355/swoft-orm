@@ -10,31 +10,40 @@ use Swoft\Connection\Pool\Contract\ConnectionInterface;
 use Illuminate\Database\Connection;
 use Swoft\Db\DB;
 use Swoft\Bean\BeanFactory;
+use cjhswoftOrm\ConnectionManager;
 /**
  * Class ConnectionFactory
  *
  * @since 2.0
  *
- * @Bean()
+ *  
  */
 class ConnectionFactory
 {
 
-	public static function   connection(string $pool)
+	public static function   connection(  $pool)
 	{
 
 		$conManager = BeanFactory::getBean(ConnectionManager::class);
-        if($conManager->hasConnection(  $pool)){
+        if(!$conManager->hasConnection(  $pool)){
             $swoft_connection = DB::connection(  $pool);
             $pdo = $swoft_connection->getPdo();
             $database = $swoft_connection->getDatabase();
             $tablePrefix = $swoft_connection->getQueryGrammar()->getTablePrefix();
 
             $config = $swoft_connection->getDatabase()->getConfig();
-       
-            $conManager->setConnection(  $pool , new Connection($pdo,$database,$tablePrefix,$config));
-        }
+
+        
+
+            $connection = new Connection($pdo,$database,$tablePrefix,$config);
  
+       
+            $conManager->setConnection(  $pool , $connection );
+        }
+
+
+ 
+      
         return  $conManager->getConnection($pool);
 	}
 
