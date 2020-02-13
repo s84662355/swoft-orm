@@ -21,7 +21,10 @@ use cjhswoftOrm\ConnectionManager;
 class ConnectionFactory
 {
 
-	public static function   connection(  $pool)
+    const default = 'db.pool';
+
+
+	public static function   connection(  $pool = ConnectionFactory::default)
 	{
 
 		$conManager = BeanFactory::getBean(ConnectionManager::class);
@@ -41,12 +44,14 @@ class ConnectionFactory
             $conManager->setConnection(  $pool , $connection );
         }
 
-
- 
-      
         return  $conManager->getConnection($pool);
 	}
 
- 
+    public static function __callStatic($name, $arguments)
+    {
+         $connection = static::connection();
+
+         return call_user_func_array([$connection,$name], $arguments);
+    }
 
 }
