@@ -1,7 +1,7 @@
 兼容laravel的orm
 
 
- 
+  
 
 namespace App\Model;
 use cjhswoftOrm\Model;
