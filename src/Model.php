@@ -42,7 +42,7 @@ abstract class Model  extends EloquentModel
 
 
  
-    public static  function resolveConnection( $connection  )
+    public static  function resolveConnection( $connection = null )
     { 
         
         return   ConnectionFactory::connection($connection );
