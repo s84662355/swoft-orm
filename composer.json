@@ -14,7 +14,7 @@
   "require": {
     "swoft/framework": "~2.0.0",
     "swoft/connection-pool": "~2.0.0",
-    "laravel/framework":"*"
+    "laravel/framework": "^7.0"
   },
   "autoload": {
     "classmap": [
