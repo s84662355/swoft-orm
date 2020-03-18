@@ -11,6 +11,8 @@ use Illuminate\Database\Connection;
 use Swoft\Db\DB;
 use Swoft\Bean\BeanFactory;
 use cjhswoftOrm\ConnectionManager;
+use Illuminate\Database\MySqlConnection ;
+
 /**
  * Class ConnectionFactory
  *
@@ -36,9 +38,7 @@ class ConnectionFactory
 
             $config = $swoft_connection->getDatabase()->getConfig();
 
-        
-
-            $connection = new Connection($pdo,$database,$tablePrefix,$config);
+            $connection = new MySqlConnection($pdo,$database,$tablePrefix,$config);
  
        
             $conManager->setConnection(  $pool , $connection );
